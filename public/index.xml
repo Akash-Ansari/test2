@@ -34,6 +34,26 @@ We&amp;rsquo;ll start with creating a new site with a very basic template.</desc
     </item>
     
     <item>
+      <title>Sample Post 1</title>
+      <link>/post/sample-post-1/</link>
+      <pubDate>Sat, 28 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/sample-post-1/</guid>
+      <description>#Load packagespacman::p_load(tidyverse, stringr)str_detect() is used to detect whether a string contains a certain pattern. At the most basic use of these functions, we can match strings of text. For instance
+jr1 = data.frame(sent = c(&amp;quot;Theo is first&amp;quot;, &amp;quot;Esther is second&amp;quot;, &amp;quot;Colin - third&amp;quot;))jr1## sent## 1 Theo is first## 2 Esther is second## 3 Colin - thirdjr1 %&amp;gt;% filter(str_detect(sent, &amp;quot;Theo&amp;quot;))## sent## 1 Theo is firstjr = c(&amp;quot;Theo is first&amp;quot;, &amp;quot;Esther is second&amp;quot;, &amp;quot;Colin - third&amp;quot;)str_detect(jr, &amp;quot;Theo&amp;quot;)## [1] TRUE FALSE FALSEstr_detect(jr, &amp;quot;is&amp;quot;)## [1] TRUE TRUE FALSESo str_detect() will return TRUE when the element contains the pattern we searched for.</description>
+    </item>
+    
+    <item>
+      <title>Sample Post 1</title>
+      <link>/post/sample-post-1/</link>
+      <pubDate>Sat, 28 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/sample-post-1/</guid>
+      <description>#Load packagespacman::p_load(tidyverse, stringr)str_detect() is used to detect whether a string contains a certain pattern. At the most basic use of these functions, we can match strings of text. For instance
+jr1 = data.frame(sent = c(&amp;quot;Theo is first&amp;quot;, &amp;quot;Esther is second&amp;quot;, &amp;quot;Colin - third&amp;quot;))jr1## sent## 1 Theo is first## 2 Esther is second## 3 Colin - thirdjr1 %&amp;gt;% filter(str_detect(sent, &amp;quot;Theo&amp;quot;))## sent## 1 Theo is firstjr = c(&amp;quot;Theo is first&amp;quot;, &amp;quot;Esther is second&amp;quot;, &amp;quot;Colin - third&amp;quot;)str_detect(jr, &amp;quot;Theo&amp;quot;)## [1] TRUE FALSE FALSEstr_detect(jr, &amp;quot;is&amp;quot;)## [1] TRUE TRUE FALSESo str_detect() will return TRUE when the element contains the pattern we searched for.</description>
+    </item>
+    
+    <item>
       <title>Hello R Markdown</title>
       <link>/post/2015-07-23-r-rmarkdown/</link>
       <pubDate>Thu, 23 Jul 2015 21:13:14 -0500</pubDate>
