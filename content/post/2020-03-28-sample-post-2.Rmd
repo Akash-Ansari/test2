@@ -1,0 +1,141 @@
+---
+title: Sample Post 1
+author: Yusuf Ansari
+date: '2020-03-28'
+slug: sample-post-1
+categories: []
+tags: [regex]
+description: 'No Description'
+topics: []
+---
+
+
+
+
+
+```{r}
+#Load packages
+pacman::p_load(tidyverse, stringr)
+```
+
+str_detect() is used to detect whether a string contains a certain pattern. At the most basic use of these functions, we can match strings of text. For instance
+```{r}
+jr1 = data.frame(sent = c("Theo is first", "Esther is second", "Colin - third"))
+jr1
+jr1 %>% filter(str_detect(sent, "Theo"))
+
+jr = c("Theo is first", "Esther is second", "Colin - third")
+str_detect(jr, "Theo")
+str_detect(jr, "is")
+```
+
+
+
+So str_detect() will return TRUE when the element contains the pattern we searched for. If we want to return the actual strings that contain these patterns, we use str_subset()
+
+```{r}
+str_subset(jr, "Theo")
+str_subset(jr, "is")
+```
+
+
+To practise our regex, we’ll need some text to practise on. Here we have a vector of filenames called files
+
+```{r}
+files = c(
+  "tmp-project.csv", "project.csv", 
+  "project2-csv-specs.csv", "project2.csv2.specs.xlsx", 
+  "project_cars.ods", "project-houses.csv", 
+  "Project_Trees.csv","project-cars.R",
+  "project-houses.r", "project-final.xls", 
+  "Project-final2.xlsx"
+)
+```
+
+
+
+```{r}
+str_subset(files, "\\.csv")
+```
+
+
+
+
+```{r}
+str_subset(files, "^Proj")
+```
+
+
+```{r}
+str_subset(files, "\\.csv$")
+str_subset(files, "\\.ods$")
+```
+
+
+### Regex: Round parentheses,(), and the pipe, |
+
+```{r}
+str_subset(files, "\\.csv$|\\.ods$")
+str_subset(files, "\\.(csv|ods)$")
+```
+
+
+### Regex: Square parentheses,[], and the asterisk, *
+```{r}
+str_extract(files, "[a-z]$")
+str_subset(files, "[\\d]")
+```
+
+
+
+```{r}
+str_extract(files, "[a-zA-Z]$")
+```
+
+
+Now, this is obviously useless at the moment. This is where does the asterisk comes into it. The asterisk is what is called a quantifier. There are three other quantifiers (+, ? and {}), but won’t cover them here. A quantifier quantifies how many of the characters we want to match and the asterisk means we want 0 or more characters of the same form. For instance, we could now extract all of the file extensions if we wished to
+
+```{r}
+str_extract(files, "[a-zA-Z]*$")
+```
+
+
+
+```{r}
+str_subset(files, "[a-zA-Z]*\\.(csv|ods)$")
+```
+
+
+
+```{r}
+str_subset(files, "(\\_|\\-)[a-zA-Z]*\\.(csv|ods)$")
+```
+
+
+
+```{r}
+str_subset(files, "(P|p)roject(\\_|\\-)[a-zA-Z]*\\.(csv|ods)$")
+str_subset(files, "^(P|p)roject(\\_|\\-)[a-zA-Z]*\\.(csv|ods)$")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
