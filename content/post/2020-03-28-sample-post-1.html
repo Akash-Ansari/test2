@@ -1,0 +1,88 @@
+---
+title: Sample Post 1
+author: Yusuf Ansari
+date: '2020-03-28'
+slug: sample-post-1
+categories: []
+tags: [regex]
+description: 'No Description'
+topics: []
+---
+
+
+
+<pre class="r"><code>#Load packages
+pacman::p_load(tidyverse, stringr)</code></pre>
+<p>str_detect() is used to detect whether a string contains a certain pattern. At the most basic use of these functions, we can match strings of text. For instance</p>
+<pre class="r"><code>jr1 = data.frame(sent = c(&quot;Theo is first&quot;, &quot;Esther is second&quot;, &quot;Colin - third&quot;))
+jr1</code></pre>
+<pre><code>##               sent
+## 1    Theo is first
+## 2 Esther is second
+## 3    Colin - third</code></pre>
+<pre class="r"><code>jr1 %&gt;% filter(str_detect(sent, &quot;Theo&quot;))</code></pre>
+<pre><code>##            sent
+## 1 Theo is first</code></pre>
+<pre class="r"><code>jr = c(&quot;Theo is first&quot;, &quot;Esther is second&quot;, &quot;Colin - third&quot;)
+str_detect(jr, &quot;Theo&quot;)</code></pre>
+<pre><code>## [1]  TRUE FALSE FALSE</code></pre>
+<pre class="r"><code>str_detect(jr, &quot;is&quot;)</code></pre>
+<pre><code>## [1]  TRUE  TRUE FALSE</code></pre>
+<p>So str_detect() will return TRUE when the element contains the pattern we searched for. If we want to return the actual strings that contain these patterns, we use str_subset()</p>
+<pre class="r"><code>str_subset(jr, &quot;Theo&quot;)</code></pre>
+<pre><code>## [1] &quot;Theo is first&quot;</code></pre>
+<pre class="r"><code>str_subset(jr, &quot;is&quot;)</code></pre>
+<pre><code>## [1] &quot;Theo is first&quot;    &quot;Esther is second&quot;</code></pre>
+<p>To practise our regex, we’ll need some text to practise on. Here we have a vector of filenames called files</p>
+<pre class="r"><code>files = c(
+  &quot;tmp-project.csv&quot;, &quot;project.csv&quot;, 
+  &quot;project2-csv-specs.csv&quot;, &quot;project2.csv2.specs.xlsx&quot;, 
+  &quot;project_cars.ods&quot;, &quot;project-houses.csv&quot;, 
+  &quot;Project_Trees.csv&quot;,&quot;project-cars.R&quot;,
+  &quot;project-houses.r&quot;, &quot;project-final.xls&quot;, 
+  &quot;Project-final2.xlsx&quot;
+)</code></pre>
+<pre class="r"><code>str_subset(files, &quot;\\.csv&quot;)</code></pre>
+<pre><code>## [1] &quot;tmp-project.csv&quot;          &quot;project.csv&quot;             
+## [3] &quot;project2-csv-specs.csv&quot;   &quot;project2.csv2.specs.xlsx&quot;
+## [5] &quot;project-houses.csv&quot;       &quot;Project_Trees.csv&quot;</code></pre>
+<pre class="r"><code>str_subset(files, &quot;^Proj&quot;)</code></pre>
+<pre><code>## [1] &quot;Project_Trees.csv&quot;   &quot;Project-final2.xlsx&quot;</code></pre>
+<pre class="r"><code>str_subset(files, &quot;\\.csv$&quot;)</code></pre>
+<pre><code>## [1] &quot;tmp-project.csv&quot;        &quot;project.csv&quot;            &quot;project2-csv-specs.csv&quot;
+## [4] &quot;project-houses.csv&quot;     &quot;Project_Trees.csv&quot;</code></pre>
+<pre class="r"><code>str_subset(files, &quot;\\.ods$&quot;)</code></pre>
+<pre><code>## [1] &quot;project_cars.ods&quot;</code></pre>
+<div id="regex-round-parentheses-and-the-pipe" class="section level3">
+<h3>Regex: Round parentheses,(), and the pipe, |</h3>
+<pre class="r"><code>str_subset(files, &quot;\\.csv$|\\.ods$&quot;)</code></pre>
+<pre><code>## [1] &quot;tmp-project.csv&quot;        &quot;project.csv&quot;            &quot;project2-csv-specs.csv&quot;
+## [4] &quot;project_cars.ods&quot;       &quot;project-houses.csv&quot;     &quot;Project_Trees.csv&quot;</code></pre>
+<pre class="r"><code>str_subset(files, &quot;\\.(csv|ods)$&quot;)</code></pre>
+<pre><code>## [1] &quot;tmp-project.csv&quot;        &quot;project.csv&quot;            &quot;project2-csv-specs.csv&quot;
+## [4] &quot;project_cars.ods&quot;       &quot;project-houses.csv&quot;     &quot;Project_Trees.csv&quot;</code></pre>
+</div>
+<div id="regex-square-parentheses-and-the-asterisk" class="section level3">
+<h3>Regex: Square parentheses,[], and the asterisk, *</h3>
+<pre class="r"><code>str_extract(files, &quot;[a-z]$&quot;)</code></pre>
+<pre><code>##  [1] &quot;v&quot; &quot;v&quot; &quot;v&quot; &quot;x&quot; &quot;s&quot; &quot;v&quot; &quot;v&quot; NA  &quot;r&quot; &quot;s&quot; &quot;x&quot;</code></pre>
+<pre class="r"><code>str_subset(files, &quot;[\\d]&quot;)</code></pre>
+<pre><code>## [1] &quot;project2-csv-specs.csv&quot;   &quot;project2.csv2.specs.xlsx&quot;
+## [3] &quot;Project-final2.xlsx&quot;</code></pre>
+<pre class="r"><code>str_extract(files, &quot;[a-zA-Z]$&quot;)</code></pre>
+<pre><code>##  [1] &quot;v&quot; &quot;v&quot; &quot;v&quot; &quot;x&quot; &quot;s&quot; &quot;v&quot; &quot;v&quot; &quot;R&quot; &quot;r&quot; &quot;s&quot; &quot;x&quot;</code></pre>
+<p>Now, this is obviously useless at the moment. This is where does the asterisk comes into it. The asterisk is what is called a quantifier. There are three other quantifiers (+, ? and {}), but won’t cover them here. A quantifier quantifies how many of the characters we want to match and the asterisk means we want 0 or more characters of the same form. For instance, we could now extract all of the file extensions if we wished to</p>
+<pre class="r"><code>str_extract(files, &quot;[a-zA-Z]*$&quot;)</code></pre>
+<pre><code>##  [1] &quot;csv&quot;  &quot;csv&quot;  &quot;csv&quot;  &quot;xlsx&quot; &quot;ods&quot;  &quot;csv&quot;  &quot;csv&quot;  &quot;R&quot;    &quot;r&quot;    &quot;xls&quot; 
+## [11] &quot;xlsx&quot;</code></pre>
+<pre class="r"><code>str_subset(files, &quot;[a-zA-Z]*\\.(csv|ods)$&quot;)</code></pre>
+<pre><code>## [1] &quot;tmp-project.csv&quot;        &quot;project.csv&quot;            &quot;project2-csv-specs.csv&quot;
+## [4] &quot;project_cars.ods&quot;       &quot;project-houses.csv&quot;     &quot;Project_Trees.csv&quot;</code></pre>
+<pre class="r"><code>str_subset(files, &quot;(\\_|\\-)[a-zA-Z]*\\.(csv|ods)$&quot;)</code></pre>
+<pre><code>## [1] &quot;tmp-project.csv&quot;        &quot;project2-csv-specs.csv&quot; &quot;project_cars.ods&quot;      
+## [4] &quot;project-houses.csv&quot;     &quot;Project_Trees.csv&quot;</code></pre>
+<pre class="r"><code>str_subset(files, &quot;(P|p)roject(\\_|\\-)[a-zA-Z]*\\.(csv|ods)$&quot;)</code></pre>
+<pre><code>## [1] &quot;project_cars.ods&quot;   &quot;project-houses.csv&quot; &quot;Project_Trees.csv&quot;</code></pre>
+<pre class="r"><code>str_subset(files, &quot;^(P|p)roject(\\_|\\-)[a-zA-Z]*\\.(csv|ods)$&quot;)</code></pre>
+<pre><code>## [1] &quot;project_cars.ods&quot;   &quot;project-houses.csv&quot; &quot;Project_Trees.csv&quot;</code></pre>
+</div>
